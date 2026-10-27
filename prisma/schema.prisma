@@ -22,3 +22,26 @@ enum Conta {
   CPF
   CNPJ
 }
+
+
+// Os três tipos de luz que uma planta pode precisar
+enum Luminosidade {
+  SOMBRA
+  MEIA_SOMBRA
+  SOL_PLENO
+}
+
+// Cada planta vendida pela Folhagem & Cia
+model Planta {
+  id            Int          @id @default(autoincrement()) // número criado pelo banco: 1, 2, 3...
+  nome          String       // nome popular, ex.: "Costela-de-adão"
+  especie       String       // nome científico, ex.: "Monstera deliciosa"
+  preco         Int          // preço em centavos: 8990 = R$ 89,90
+  estoque       Int          // quantos vasos tem para vender
+  luminosidade  Luminosidade // SOMBRA, MEIA_SOMBRA ou SOL_PLENO
+  petFriendly   Boolean      // true se for segura para cães e gatos
+  regaACadaDias Int          // de quantos em quantos dias regar
+  createdAt     DateTime     @default(now()) // data de criação, preenchida sozinha
+  updatedAt     DateTime     @updatedAt      // data da última edição, preenchida sozinha
+}
+
