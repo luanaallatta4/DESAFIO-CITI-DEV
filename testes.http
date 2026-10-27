@@ -1,0 +1,196 @@
+@url = http://localhost:3001
+
+@id = 1
+
+### cadastrar uma planta válida
+POST {{url}}/plantas
+Content-Type: application/json
+
+{
+  "nome": "Costela-de-adão",
+  "especie": "Monstera deliciosa",
+  "preco": 8990,
+  "estoque": 12,
+  "luminosidade": "MEIA_SOMBRA",
+  "petFriendly": false,
+  "regaACadaDias": 7
+}
+
+### cadastrar com estoque 0 e petFriendly false
+POST {{url}}/plantas
+Content-Type: application/json
+
+{
+  "nome": "Samambaia",
+  "especie": "Nephrolepis exaltata",
+  "preco": 4500,
+  "estoque": 0,
+  "luminosidade": "SOMBRA",
+  "petFriendly": false,
+  "regaACadaDias": 2
+}
+
+### cadastrar sem um campo (falta regaACadaDias)
+POST {{url}}/plantas
+Content-Type: application/json
+
+{
+  "nome": "Cacto",
+  "especie": "Cereus jamacaru",
+  "preco": 3000,
+  "estoque": 5,
+  "luminosidade": "SOL_PLENO",
+  "petFriendly": true
+}
+
+### cadastrar com preco 0
+POST {{url}}/plantas
+Content-Type: application/json
+
+{
+  "nome": "Cacto",
+  "especie": "Cereus jamacaru",
+  "preco": 0,
+  "estoque": 5,
+  "luminosidade": "SOL_PLENO",
+  "petFriendly": true,
+  "regaACadaDias": 15
+}
+
+### cadastrar com estoque -1
+POST {{url}}/plantas
+Content-Type: application/json
+
+{
+  "nome": "Cacto",
+  "especie": "Cereus jamacaru",
+  "preco": 3000,
+  "estoque": -1,
+  "luminosidade": "SOL_PLENO",
+  "petFriendly": true,
+  "regaACadaDias": 15
+}
+
+### cadastrar com preco como texto "8990"
+POST {{url}}/plantas
+Content-Type: application/json
+
+{
+  "nome": "Cacto",
+  "especie": "Cereus jamacaru",
+  "preco": "8990",
+  "estoque": 5,
+  "luminosidade": "SOL_PLENO",
+  "petFriendly": true,
+  "regaACadaDias": 15
+}
+
+### cadastrar com luminosidade "LUA"
+POST {{url}}/plantas
+Content-Type: application/json
+
+{
+  "nome": "Cacto",
+  "especie": "Cereus jamacaru",
+  "preco": 3000,
+  "estoque": 5,
+  "luminosidade": "LUA",
+  "petFriendly": true,
+  "regaACadaDias": 15
+}
+
+### listar todas as plantas
+GET {{url}}/plantas
+
+### buscar um id que existe
+GET {{url}}/plantas/{{id}}
+
+### buscar um id que não existe
+GET {{url}}/plantas/9999
+
+### buscar com id "abc"
+GET {{url}}/plantas/abc
+
+### editar só o preço
+PATCH {{url}}/plantas/{{id}}
+Content-Type: application/json
+
+{
+  "preco": 9990
+}
+
+### editar com valor inválido
+PATCH {{url}}/plantas/{{id}}
+Content-Type: application/json
+
+{
+  "preco": -5
+}
+
+### editar um id que não existe
+PATCH {{url}}/plantas/9999
+Content-Type: application/json
+
+{
+  "preco": 9990
+}
+
+### filtrar por luminosidade
+GET {{url}}/plantas?luminosidade=SOMBRA
+
+### filtrar por petFriendly
+GET {{url}}/plantas?petFriendly=false
+
+### filtrar pelos dois juntos
+GET {{url}}/plantas?luminosidade=MEIA_SOMBRA&petFriendly=false
+
+### filtro válido sem resultado
+GET {{url}}/plantas?luminosidade=SOL_PLENO
+
+### filtro inválido
+GET {{url}}/plantas?luminosidade=LUA
+
+### vender o que tem
+POST {{url}}/plantas/{{id}}/venda
+Content-Type: application/json
+
+{
+  "quantidade": 2
+}
+
+### vender mais do que tem
+POST {{url}}/plantas/{{id}}/venda
+Content-Type: application/json
+
+{
+  "quantidade": 1000
+}
+
+### vender quantidade 0
+POST {{url}}/plantas/{{id}}/venda
+Content-Type: application/json
+
+{
+  "quantidade": 0
+}
+
+### valor total do estoque
+GET {{url}}/plantas/estoque/valor-total
+
+### buscar por nome sem diferenciar maiúsculas
+GET {{url}}/plantas?nome=COSTELA
+
+### ordenar por preço
+GET {{url}}/plantas?ordem=preco
+
+### listar plantas esgotadas
+GET {{url}}/plantas/esgotadas
+
+### deletar
+DELETE {{url}}/plantas/{{id}}
+
+### buscar a planta deletada
+GET {{url}}/plantas/{{id}}
+
+### deletar de novo
+DELETE {{url}}/plantas/{{id}}
